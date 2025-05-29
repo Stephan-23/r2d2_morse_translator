@@ -45,6 +45,32 @@ function encode() {
 
 // Function to decode Morse code into text
 function decode() {
-    const input = document.getElementById('inputText').value;                 // Get the value of the input text field (expected to be Morse code)
-    document.getElementById('outputText').innerText = 'Decoding: ' + input;     // Display the raw Morse code as part of the output (decoding not yet implemented)
+    const input = document.getElementById('inputText').value.trim();
+    const outputElement = document.getElementById('outputText');
+
+    // Handle empty input
+    if (!input) {
+        outputElement.innerText = 'Error: Please enter Morse code to decode.';
+        return;
+    }
+
+    // Split input by spaces to get Morse code segments
+    const morseWords = input.split(' / ');
+    let result = '';
+
+    for (let word of morseWords) {
+        const morseChars = word.split(' ').filter(char => char);
+        for (let char of morseChars) {
+            if (reverseMorseDict[char]) {
+                result += reverseMorseDict[char];
+            } else {
+                outputElement.innerText = `Error: Invalid Morse code "${char}" found.`;
+                return;
+            }
+        }
+        result += ' '; // Add space between words
+    }
+
+    // Display the decoded text (trim trailing space)
+    outputElement.innerText = result.trim();
 }
