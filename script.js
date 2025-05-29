@@ -17,9 +17,30 @@ const reverseMorseDict = Object.fromEntries(
 
 
 // Function to encode text into Morse code
+// Encode text to Morse code
 function encode() {
-    const input = document.getElementById('inputText').value.toUpperCase();  // Get the value of the input text field and convert it to uppercase
-    document.getElementById('outputText').innerText = 'Encoding: ' + input;  // Display the raw input text as part of the output, no encoding yet
+    const input = document.getElementById('inputText').value.toUpperCase().trim();
+    const outputElement = document.getElementById('outputText');
+
+    // Handle empty input
+    if (!input) {
+        outputElement.innerText = 'Error: Please enter text to encode.';
+        return;
+    }
+
+    // Convert each character to Morse code
+    let result = '';
+    for (let char of input) {
+        if (morseCodeDict[char]) {
+            result += morseCodeDict[char] + ' ';
+        } else {
+            outputElement.innerText = `Error: Invalid character "${char}" found.`;
+            return;
+        }
+    }
+
+    // Display the Morse code (trim trailing space)
+    outputElement.innerText = result.trim();
 }
 
 // Function to decode Morse code into text
