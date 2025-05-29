@@ -10,6 +10,12 @@ const morseCodeDict = {
     '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--'
 };
 
+// Reverse dictionary for decoding (Morse to text)
+const reverseMorseDict = Object.fromEntries(
+    Object.entries(morseCodeDict).map(([key, value]) => [value, key])
+);
+
+
 // Function to encode text into Morse code
 function encode() {
     const input = document.getElementById('inputText').value.toUpperCase();  // Get the value of the input text field and convert it to uppercase
